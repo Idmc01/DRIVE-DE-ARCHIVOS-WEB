@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drive Web</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1> Drive Web </h1>
+    <div id="userInput">
+      <input type="text" id="username" placeholder="Ingrese su nombre de usuario" />
+      <button onclick="enterDrive()">Entrar</button>
+    </div>
+  </header>
+
+  <div id="driveUI" style="display: none;">
+    <nav>
+      <span id="currentPath">/</span>
+      <button onclick="createFolder()">📁 Nuevo Directorio</button>
+      <button onclick="createFile()">📄 Nuevo Archivo</button>
+    </nav>
+
+    <section id="fileView">
+      <!-- Los archivos y carpetas -->
+    </section>
+  </div>
+
+  <!-- Modal para entrada de datos -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="modalTitle"></span>
+      <input type="text" id="modalInput" placeholder="Ingrese nombre" />
+      <textarea id="modalText" placeholder="Contenido (opcional para archivo)"></textarea>
+      <button onclick="confirmModal()">Aceptar</button>
+      <button onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

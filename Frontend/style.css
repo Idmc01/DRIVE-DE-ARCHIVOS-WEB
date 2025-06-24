@@ -1,0 +1,69 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fffbfb;
+}
+
+header {
+  background: #000000;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+
+#userInput input {
+  padding: 0.5em;
+  width: 200px;
+}
+
+nav {
+  display: flex;
+  gap: 1em;
+  padding: 1em;
+  background: #e0e0e0;
+}
+
+#fileView {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.file, .folder {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 1em;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.folder {
+  font-weight: bold;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 2em;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
