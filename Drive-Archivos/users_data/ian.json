@@ -1,0 +1,78 @@
+{
+  "usuario": "ian",
+  "espacio_total": 5000,
+  "espacio_usado": 26,
+  "ruta_actual": "/",
+  "drive": {
+    "nombre": "root",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-24T16:17:05.650872500",
+    "fecha_modificacion": "2025-06-24T16:17:05.650872500",
+    "contenidoLista": [
+      {
+        "nombre": "documentos",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-27T12:01:38.438526900",
+        "fecha_modificacion": "2025-06-27T12:01:38.438526900",
+        "contenidoLista": [
+          {
+            "nombre": "pruebaDir.txt",
+            "tipo": "archivo",
+            "extension": ".txt",
+            "contenido": "hola",
+            "tamano": 4,
+            "fecha_creacion": "2025-06-27T16:36:27.336312700",
+            "fecha_modificacion": "2025-06-27T16:36:27.336312700",
+            "contenidoLista": []
+          }
+        ]
+      },
+      {
+        "nombre": "ejemplo.txt",
+        "tipo": "archivo",
+        "extension": ".txt",
+        "contenido": "hola mundo",
+        "tamano": 10,
+        "fecha_creacion": "2025-06-27T16:05:25.472803100",
+        "fecha_modificacion": "2025-06-27T16:05:25.472803100",
+        "contenidoLista": []
+      },
+      {
+        "nombre": "documentos2",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-27T16:05:41.401714700",
+        "fecha_modificacion": "2025-06-27T16:05:41.401714700",
+        "contenidoLista": []
+      },
+      {
+        "nombre": "docs",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-27T16:34:20.158756900",
+        "fecha_modificacion": "2025-06-27T16:34:20.158756900",
+        "contenidoLista": []
+      },
+      {
+        "nombre": "docs.txt",
+        "tipo": "archivo",
+        "extension": ".txt",
+        "contenido": "hola mundo 2",
+        "tamano": 12,
+        "fecha_creacion": "2025-06-27T16:34:51.541306300",
+        "fecha_modificacion": "2025-06-27T16:34:51.541306300",
+        "contenidoLista": []
+      }
+    ]
+  },
+  "compartidos": {
+    "nombre": "compartidos",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-24T16:17:05.650872500",
+    "fecha_modificacion": "2025-06-24T16:17:05.650872500",
+    "contenidoLista": []
+  }
+}

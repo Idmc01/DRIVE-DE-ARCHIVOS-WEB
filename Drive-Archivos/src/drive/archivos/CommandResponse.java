@@ -11,6 +11,11 @@ public class CommandResponse implements Serializable {
         this.success = success;
         this.message = message;
     }
+    public CommandResponse(boolean success, String message, Object data){
+        this.success = success;
+        this.message = message;
+        this.data = data;
+    }
 
     // Getters y setters
     public boolean isSuccess() { return success; }

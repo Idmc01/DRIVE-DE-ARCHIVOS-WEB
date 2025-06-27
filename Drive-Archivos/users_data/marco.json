@@ -1,0 +1,33 @@
+{
+  "usuario": "marco",
+  "espacio_total": 10000,
+  "espacio_usado": 10,
+  "ruta_actual": "/",
+  "drive": {
+    "nombre": "root",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-25T19:22:55.558714900",
+    "fecha_modificacion": "2025-06-25T19:22:55.558714900",
+    "contenidoLista": [
+      {
+        "nombre": "nota.txt",
+        "tipo": "archivo",
+        "extension": ".txt",
+        "contenido": "hola mundo",
+        "tamano": 10,
+        "fecha_creacion": "2025-06-25T19:23:34.284057300",
+        "fecha_modificacion": "2025-06-25T19:23:34.284057300",
+        "contenidoLista": []
+      }
+    ]
+  },
+  "compartidos": {
+    "nombre": "compartidos",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-25T19:22:55.558714900",
+    "fecha_modificacion": "2025-06-25T19:22:55.558714900",
+    "contenidoLista": []
+  }
+}

@@ -60,18 +60,22 @@ public class FileSystemClient {
     }
 
     public CommandResponse createFile(String filename, String content) {
-        return null;
-    }
+        Command cmd = new Command(CommandType.CREATE_FILE, filename, content);
+    return sendCommand(cmd);
+}
 
     public CommandResponse createDirectory(String dirname) {
-        return null;
+        Command cmd = new Command(CommandType.CREATE_DIR, dirname);
+    return sendCommand(cmd);
     }
 
     public CommandResponse listDirectory() {
-        return null;
+        Command cmd = new Command(CommandType.LIST_DIR);
+    return sendCommand(cmd);
     }
 
     public CommandResponse changeDirectory(String newDir) {
-        return null;
+        Command cmd = new Command(CommandType.CHANGE_DIR, newDir);
+    return sendCommand(cmd);
     }
 }
