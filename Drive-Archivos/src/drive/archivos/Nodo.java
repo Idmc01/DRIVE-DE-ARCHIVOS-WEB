@@ -12,6 +12,8 @@ public class Nodo implements Serializable {
     public String fecha_creacion;
     public String fecha_modificacion;
     public List<Nodo> contenidoLista; // solo para directorios
+    
+     public String fechaCreacion;
 
     public Nodo() {
         contenidoLista = new ArrayList<>();

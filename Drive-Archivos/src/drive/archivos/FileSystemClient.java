@@ -78,4 +78,43 @@ public class FileSystemClient {
         Command cmd = new Command(CommandType.CHANGE_DIR, newDir);
     return sendCommand(cmd);
     }
+    public CommandResponse viewFile(String filename) {
+    Command cmd = new Command(CommandType.VIEW_FILE, filename);
+    return sendCommand(cmd);
+}
+    public CommandResponse modifyFile(String filename, String newContent) {
+    Command cmd = new Command(CommandType.MODIFY_FILE, filename, newContent);
+    return sendCommand(cmd);
+}
+    public CommandResponse viewProperties(String filename) {
+    Command cmd = new Command(CommandType.VIEW_PROPERTIES, filename);
+    return sendCommand(cmd);
+}
+    public CommandResponse delete(String name) {
+    Command cmd = new Command(CommandType.DELETE, name);
+    return sendCommand(cmd);
+}
+    public CommandResponse copy(String name, String sourcePath, String destPath) {
+    Command cmd = new Command(CommandType.COPY, name, sourcePath, destPath);
+    return sendCommand(cmd);
+}
+    public CommandResponse move(String name, String sourcePath, String destPath) {
+        Command cmd = new Command(CommandType.MOVE, name, sourcePath, destPath);
+        return sendCommand(cmd);
+    }
+    public CommandResponse share(String name, String sourcePath, String targetUsername) {
+    Command cmd = new Command(CommandType.SHARE, name, sourcePath, targetUsername);
+    return sendCommand(cmd);
+}
+    public CommandResponse downloadFile(String filename, String path) {
+    Command cmd = new Command(CommandType.DOWNLOAD, filename, path);
+    return sendCommand(cmd);
+}
+public CommandResponse loadFile(String localPath, String currentPath) {
+    Command cmd = new Command(CommandType.LOAD, localPath, currentPath);
+    return sendCommand(cmd);
+}
+
+
+
 }

@@ -19,6 +19,49 @@
         "fecha_creacion": "2025-06-25T19:23:34.284057300",
         "fecha_modificacion": "2025-06-25T19:23:34.284057300",
         "contenidoLista": []
+      },
+      {
+        "nombre": "compartidos",
+        "tipo": "directorio",
+        "tamano": 0,
+        "contenidoLista": [
+          {
+            "nombre": "ian",
+            "tipo": "directorio",
+            "tamano": 0,
+            "contenidoLista": [
+              {
+                "nombre": "mover.txt",
+                "tipo": "archivo",
+                "extension": ".txt",
+                "contenido": "hola",
+                "tamano": 4,
+                "fecha_creacion": "2025-06-27T20:35:19.384173",
+                "fecha_modificacion": "2025-06-27T20:35:19.384173",
+                "contenidoLista": []
+              },
+              {
+                "nombre": "docs",
+                "tipo": "directorio",
+                "tamano": 0,
+                "fecha_creacion": "2025-06-27T20:36:17.095173900",
+                "fecha_modificacion": "2025-06-27T20:36:17.095173900",
+                "contenidoLista": [
+                  {
+                    "nombre": "mover.txt",
+                    "tipo": "archivo",
+                    "extension": ".txt",
+                    "contenido": "hola",
+                    "tamano": 4,
+                    "fecha_creacion": "2025-06-27T20:36:17.095173900",
+                    "fecha_modificacion": "2025-06-27T20:36:17.095173900",
+                    "contenidoLista": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ]
   },
