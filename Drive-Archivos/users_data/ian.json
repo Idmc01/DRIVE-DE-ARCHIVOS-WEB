@@ -1,0 +1,99 @@
+{
+  "usuario": "ian",
+  "espacio_total": 5000,
+  "espacio_usado": 34,
+  "ruta_actual": "/",
+  "drive": {
+    "nombre": "root",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-24T16:17:05.650872500",
+    "fecha_modificacion": "2025-06-24T16:17:05.650872500",
+    "contenidoLista": [
+      {
+        "nombre": "documentos2",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-27T16:05:41.401714700",
+        "fecha_modificacion": "2025-06-27T16:05:41.401714700",
+        "contenidoLista": [
+          {
+            "nombre": "mover.txt",
+            "tipo": "archivo",
+            "extension": ".txt",
+            "contenido": "hola",
+            "tamano": 4,
+            "fecha_creacion": "2025-06-27T19:26:13.120435700",
+            "fecha_modificacion": "2025-06-27T19:26:13.120435700",
+            "contenidoLista": []
+          },
+          {
+            "nombre": "ejemplo.txt",
+            "tipo": "archivo",
+            "extension": ".txt",
+            "contenido": "adios mundo",
+            "tamano": 11,
+            "fecha_creacion": "2025-06-27T19:55:09.965602100",
+            "fecha_modificacion": "2025-06-27T19:55:09.965602100",
+            "contenidoLista": []
+          }
+        ]
+      },
+      {
+        "nombre": "docs",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-27T16:34:20.158756900",
+        "fecha_modificacion": "2025-06-27T16:34:20.158756900",
+        "contenidoLista": [
+          {
+            "nombre": "mover.txt",
+            "tipo": "archivo",
+            "extension": ".txt",
+            "contenido": "hola",
+            "tamano": 4,
+            "fecha_creacion": "2025-06-27T19:25:25.166063300",
+            "fecha_modificacion": "2025-06-27T19:25:25.166063300",
+            "contenidoLista": []
+          }
+        ]
+      },
+      {
+        "nombre": "ejemplo.txt_copia",
+        "tipo": "archivo",
+        "extension": ".txt",
+        "contenido": "adios mundo",
+        "tamano": 11,
+        "fecha_creacion": "2025-06-27T18:26:12.566379800",
+        "fecha_modificacion": "2025-06-27T18:26:12.566379800",
+        "contenidoLista": []
+      },
+      {
+        "nombre": "mover.txt",
+        "tipo": "archivo",
+        "extension": ".txt",
+        "contenido": "hola",
+        "tamano": 4,
+        "fecha_creacion": "2025-06-27T18:46:28.760555200",
+        "fecha_modificacion": "2025-06-27T18:46:28.760555200",
+        "contenidoLista": []
+      },
+      {
+        "nombre": "ejemplo.txt",
+        "tipo": "archivo",
+        "contenido": "prueba upload",
+        "tamano": 0,
+        "contenidoLista": [],
+        "fechaCreacion": "2025-06-27T21:59:33.365021600"
+      }
+    ]
+  },
+  "compartidos": {
+    "nombre": "compartidos",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-24T16:17:05.650872500",
+    "fecha_modificacion": "2025-06-24T16:17:05.650872500",
+    "contenidoLista": []
+  }
+}
