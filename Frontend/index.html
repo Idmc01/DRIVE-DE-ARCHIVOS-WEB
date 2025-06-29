@@ -8,9 +8,14 @@
 </head>
 <body>
   <header>
-    <h1> Drive Web </h1>
+    <h1>Drive Web</h1>
     <div id="userInput">
-      <input type="text" id="username" placeholder="Ingrese su nombre de usuario" />
+      <select id="username">
+        <option value="">Seleccione un usuario</option>
+        <option value="ian">ian</option>
+        <option value="marco">marco</option>
+        <!-- Puedes agregar más usuarios manualmente -->
+      </select>
       <button onclick="enterDrive()">Entrar</button>
     </div>
   </header>
@@ -20,23 +25,27 @@
       <span id="currentPath">/</span>
       <button onclick="createFolder()">📁 Nuevo Directorio</button>
       <button onclick="createFile()">📄 Nuevo Archivo</button>
+      <button onclick="goToRoot()">🏠 Ir a raíz</button>
     </nav>
 
     <section id="fileView">
-      <!-- Los archivos y carpetas -->
+      <!-- Aquí se listarán los archivos y carpetas -->
     </section>
   </div>
 
-  <!-- Modal para entrada de datos -->
+  <!-- Modal para crear archivo o directorio -->
   <div id="modal" class="modal hidden">
     <div class="modal-content">
-      <span id="modalTitle"></span>
-      <input type="text" id="modalInput" placeholder="Ingrese nombre" />
-      <textarea id="modalText" placeholder="Contenido (opcional para archivo)"></textarea>
+      <h2 id="modalTitle"></h2>
+      <input type="text" id="modalInput" placeholder="Nombre" />
+      <textarea id="modalText" placeholder="Contenido (solo para archivos)"></textarea>
       <button onclick="confirmModal()">Aceptar</button>
       <button onclick="closeModal()">Cancelar</button>
     </div>
   </div>
+
+  <!-- Área para mostrar mensajes del backend -->
+  <pre id="output"></pre>
 
   <script src="script.js"></script>
 </body>

@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Java con Gson",
+            "type": "shell",
+            "command": "javac",
+            "args": [
+                "-cp",
+                ".;gson-2.10.1.jar",
+                "-d",
+                "out",
+                "src/drive/archivos/*.java"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

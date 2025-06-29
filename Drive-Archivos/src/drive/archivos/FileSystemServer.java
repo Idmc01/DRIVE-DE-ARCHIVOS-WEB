@@ -1,7 +1,5 @@
 package drive.archivos;
-import static drive.archivos.CommandType.CREATE_DRIVE;
-import static drive.archivos.CommandType.CREATE_FILE;
-import static drive.archivos.CommandType.LOGIN;
+
 import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
@@ -9,20 +7,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.*;
+import com.google.gson.Gson;
 
 public class FileSystemServer {
     private static final int PORT = 12345;
     private static final int MAX_THREADS = 10;
     private static final String USERS_DIR = "users_data/";
-    
 
     public static void main(String[] args) {
         ExecutorService executor = Executors.newFixedThreadPool(MAX_THREADS);
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("Servidor de File System iniciado en el puerto " + PORT);
+            System.out.println("Servidor FileSystem escuchando en el puerto " + PORT);
 
-            // Crear directorio para datos de usuarios si no existe
+            // Crear carpeta para usuarios si no existe
             new File(USERS_DIR).mkdirs();
 
             while (true) {
@@ -39,11 +37,10 @@ public class FileSystemServer {
 
 class ClientHandler implements Runnable {
     private Socket clientSocket;
-    private String currentUser;
     private DriveUsuario usuarioActual;
-    private static final String USERS_DIR = "users_data/";
     private String nombreUsuarioActual;
-
+    private static final String USERS_DIR = "users_data/";
+    private Gson gson = new Gson();
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -51,21 +48,23 @@ class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        try (ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-             ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true)) {
 
-            // Protocolo de comunicación
-            while (true) {
-                Command command = (Command) in.readObject();
-                CommandResponse response = processCommand(command);
-                out.writeObject(response);
-                out.flush();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    Command command = gson.fromJson(line, Command.class);
+                    CommandResponse response = processCommand(command);
+                    String jsonResponse = gson.toJson(response);
+                    writer.println(jsonResponse);
+                } catch (Exception e) {
+                    writer.println(gson.toJson(new CommandResponse(false, "Error procesando comando: " + e.getMessage())));
+                }
             }
 
-        } catch (EOFException e) {
-            System.out.println("Cliente desconectado: " + clientSocket);
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error con cliente: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Error en el cliente: " + e.getMessage());
         } finally {
             try {
                 clientSocket.close();
@@ -75,32 +74,38 @@ class ClientHandler implements Runnable {
         }
     }
 
+    // -------------------------
+    // Métodos auxiliares necesarios
+    // -------------------------
+
     private String obtenerExtension(String nombre) {
-    int punto = nombre.lastIndexOf('.');
-    return (punto != -1) ? nombre.substring(punto) : "";
-}
-    private Nodo buscarNodoPorRuta(Nodo raiz, String ruta) {
-    if (ruta.equals("/") || ruta.isEmpty()) return raiz;
-
-    String[] partes = ruta.split("/");
-    Nodo actual = raiz;
-
-    for (String parte : partes) {
-        if (parte.isEmpty()) continue;
-        boolean encontrado = false;
-        for (Nodo hijo : actual.contenidoLista) {
-            if (hijo.nombre.equals(parte) && "directorio".equals(hijo.tipo)) {
-                actual = hijo;
-                encontrado = true;
-                break;
-            }
-        }
-        if (!encontrado) return null;
+        int punto = nombre.lastIndexOf('.');
+        return (punto != -1) ? nombre.substring(punto) : "";
     }
-    return actual;
-}
+
+    private Nodo buscarNodoPorRuta(Nodo raiz, String ruta) {
+        if (ruta.equals("/") || ruta.isEmpty()) return raiz;
+
+        String[] partes = ruta.split("/");
+        Nodo actual = raiz;
+
+        for (String parte : partes) {
+            if (parte.isEmpty()) continue;
+            boolean encontrado = false;
+            for (Nodo hijo : actual.contenidoLista) {
+                if (hijo.nombre.equals(parte) && "directorio".equals(hijo.tipo)) {
+                    actual = hijo;
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) return null;
+        }
+        return actual;
+    }
+
+
     private CommandResponse processCommand(Command command) {
-        // Implementar lógica para cada comando
         switch (command.getType()) {
             case CREATE_DRIVE:
                 return handleCreateDrive(command);
@@ -132,14 +137,15 @@ class ClientHandler implements Runnable {
                 return handleDownload(command);
             case LOAD:
                 return handleLoad(command);
-
-
-            // ... otros comandos
             default:
                 return new CommandResponse(false, "Comando no reconocido");
         }
     }
 
+
+    // ----------------------------------
+    // Métodos para manejar cada comando
+    // ----------------------------------
     private CommandResponse handleCreateFile(Command command) {
         if (usuarioActual == null) {
         return new CommandResponse(false, "Debe hacer login primero.");
@@ -193,7 +199,7 @@ class ClientHandler implements Runnable {
             return new CommandResponse(false, "Usuario no encontrado");
         }
 
-        this.currentUser = username;
+        this.nombreUsuarioActual = username;
         this.usuarioActual = cargado;
         this.nombreUsuarioActual = username; // <- esta línea es nueva
         return new CommandResponse(true, "Login exitoso");

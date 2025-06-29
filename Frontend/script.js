@@ -1,41 +1,71 @@
 let currentUser = "";
 let currentPath = "/";
 
+// Entrar al Drive (login)
 function enterDrive() {
   const username = document.getElementById("username").value.trim();
   if (!username) return alert("Ingrese un nombre de usuario");
-  currentUser = username;
-  document.getElementById("driveUI").style.display = "block";
-  document.getElementById("userInput").style.display = "none";
-  loadDirectory();
+
+  sendCommand("LOGIN", [username])
+    .then(response => {
+      console.log(" Respuesta del backend:", response);
+      if (response.success) {
+        document.getElementById("driveUI").style.display = "block";
+        document.getElementById("userInput").style.display = "none";
+        loadDirectory();
+      } else {
+        alert(response.message);
+      }
+    });
 }
 
+// Listar contenido del directorio actual
 function loadDirectory() {
   document.getElementById("currentPath").innerText = currentPath;
   const fileView = document.getElementById("fileView");
   fileView.innerHTML = "";
 
-  // Aquí deberías hacer una llamada al backend con fetch para obtener archivos
-  // Por ahora simulamos:
-  const fakeData = [
-    { name: "documento.txt", type: "file" },
-    { name: "trabajos", type: "folder" }
-  ];
+  sendCommand("LIST_DIR", [])
+    .then(response => {
+      if (response.success && response.data) {
+        const lines = response.data.split("\n");
+        lines.forEach(line => {
+          if (line.trim() === "") return;
 
-  fakeData.forEach(item => {
-    const div = document.createElement("div");
-    div.className = item.type === "file" ? "file" : "folder";
-    div.innerText = item.name;
-    div.onclick = () => {
-      if (item.type === "folder") {
-        currentPath += item.name + "/";
-        loadDirectory();
+          const div = document.createElement("div");
+          if (line.startsWith("[DIR]")) {
+            const folderName = line.replace("[DIR]", "").trim();
+            div.className = "folder";
+            div.innerText = folderName;
+            div.onclick = () => {
+              currentPath += folderName + "/";
+              sendCommand("CHANGE_DIR", [folderName])
+                .then(resp => {
+                  if (resp.success) loadDirectory();
+                  else alert(resp.message);
+                });
+            };
+          } else if (line.startsWith("[FILE]")) {
+            const fileName = line.replace("[FILE]", "").split("(")[0].trim();
+            div.className = "file";
+            div.innerText = fileName;
+            div.onclick = () => {
+              sendCommand("VIEW_FILE", [fileName])
+                .then(resp => {
+                  if (resp.success) {
+                    alert("Contenido de " + fileName + ":\n\n" + resp.data);
+                  } else {
+                    alert(resp.message);
+                  }
+                });
+            };
+          }
+          fileView.appendChild(div);
+        });
       } else {
-        alert("Visualizar archivo: " + item.name);
+        fileView.innerText = response.message || "(Vacío)";
       }
-    };
-    fileView.appendChild(div);
-  });
+    });
 }
 
 // Modal
@@ -58,18 +88,42 @@ function closeModal() {
   document.getElementById("modalText").value = "";
 }
 function confirmModal() {
-  const name = document.getElementById("modalInput").value;
-  const content = document.getElementById("modalText").value;
+  const name = document.getElementById("modalInput").value.trim();
+  const content = document.getElementById("modalText").value.trim();
   closeModal();
 
   if (modalAction === "folder") {
-    alert(`Crear carpeta "${name}" en ${currentPath}`);
-    // fetch para crear carpeta
+    sendCommand("CREATE_DIR", [name])
+      .then(response => {
+        alert(response.message);
+        loadDirectory();
+      });
   } else {
-    alert(`Crear archivo "${name}" con contenido:\n${content}`);
-    // fetch para crear archivo
+    sendCommand("CREATE_FILE", [name, content])
+      .then(response => {
+        alert(response.message);
+        loadDirectory();
+      });
   }
+}
 
-  // Actualizar vista
-  loadDirectory();
+// Función genérica para enviar comandos al backend
+function sendCommand(type, parameters) {
+  const command = {
+    type: type,
+    parameters: parameters
+  };
+
+  return fetch('http://127.0.0.1:3000/sendCommand', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(command)
+  })
+    .then(response => response.json())
+    .catch(err => {
+      console.error("Error de red o de Node.js:", err);
+      return { success: false, message: "Error de conexión al backend" };
+    });
 }
