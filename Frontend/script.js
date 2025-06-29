@@ -63,7 +63,12 @@ function loadDirectory() {
           fileView.appendChild(div);
         });
       } else {
-        fileView.innerText = response.message || "(Vacío)";
+        if (response.success) {
+          fileView.innerText = "(Directorio vacío)";
+        } else {
+          fileView.innerText = response.message || "Error al listar contenido.";
+        }
+
       }
     });
 }
