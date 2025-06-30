@@ -69,6 +69,23 @@
                 "contenidoLista": []
               }
             ]
+          },
+          {
+            "nombre": "vale",
+            "tipo": "directorio",
+            "tamano": 0,
+            "contenidoLista": [
+              {
+                "nombre": "prueba.txt",
+                "tipo": "archivo",
+                "extension": ".txt",
+                "contenido": "",
+                "tamano": 0,
+                "fecha_creacion": "2025-06-30T08:32:37.314813300",
+                "fecha_modificacion": "2025-06-30T08:32:37.314813300",
+                "contenidoLista": []
+              }
+            ]
           }
         ]
       }

@@ -1,0 +1,62 @@
+{
+  "usuario": "vale",
+  "espacio_total": 10000,
+  "espacio_usado": 4,
+  "ruta_actual": "/",
+  "drive": {
+    "nombre": "root",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-30T08:29:46.085388500",
+    "fecha_modificacion": "2025-06-30T08:29:46.085388500",
+    "contenidoLista": [
+      {
+        "nombre": "prueba",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-30T08:30:04.161333200",
+        "fecha_modificacion": "2025-06-30T08:30:04.161333200",
+        "contenidoLista": [
+          {
+            "nombre": "prueba2.txt",
+            "tipo": "archivo",
+            "extension": ".txt",
+            "contenido": "hola",
+            "tamano": 4,
+            "fecha_creacion": "2025-06-30T08:33:38.209263600",
+            "fecha_modificacion": "2025-06-30T08:33:38.209263600",
+            "contenidoLista": []
+          },
+          {
+            "nombre": "prueba.txt",
+            "tipo": "archivo",
+            "extension": ".txt",
+            "contenido": "",
+            "tamano": 0,
+            "fecha_creacion": "2025-06-30T08:34:03.442564300",
+            "fecha_modificacion": "2025-06-30T08:34:03.442564300",
+            "contenidoLista": []
+          }
+        ]
+      },
+      {
+        "nombre": "prueba.txt",
+        "tipo": "archivo",
+        "extension": ".txt",
+        "contenido": "",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-30T08:30:16.664384900",
+        "fecha_modificacion": "2025-06-30T08:30:16.664384900",
+        "contenidoLista": []
+      }
+    ]
+  },
+  "compartidos": {
+    "nombre": "compartidos",
+    "tipo": "directorio",
+    "tamano": 0,
+    "fecha_creacion": "2025-06-30T08:29:46.085388500",
+    "fecha_modificacion": "2025-06-30T08:29:46.085388500",
+    "contenidoLista": []
+  }
+}

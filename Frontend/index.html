@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Drive Web</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header>
     <h1>Drive Web</h1>
     <div id="userInput">
       <input type="text" id="username" placeholder="Ingrese su nombre de usuario" />
       <button onclick="enterDrive()">Entrar</button>
+      <button onclick="openDriveModal()">Crear Drive</button>
     </div>
   </header>
 
@@ -42,10 +45,21 @@
       <button onclick="closeModal()">Cancelar</button>
     </div>
   </div>
+  <!-- Modal para crear drive -->
+  <div id="driveModal" class="modal hidden">
+    <div class="modal-content">
+      <span id="driveModalTitle">Crear Drive</span>
+      <input type="text" id="driveSizeInput" placeholder="Tamaño del drive (en MB)" />
+      <button onclick="confirmDriveModal()">Aceptar</button>
+      <button onclick="closeDriveModal()">Cancelar</button>
+    </div>
+  </div>
+
 
   <!-- Input oculto para subir archivos locales -->
   <input type="file" id="fileInput" style="display:none;" />
 
   <script src="script.js"></script>
 </body>
+
 </html>

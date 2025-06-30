@@ -170,6 +170,37 @@ function confirmModal() {
       });
   }
 }
+function openDriveModal() {
+  document.getElementById("driveModal").classList.remove("hidden");
+  document.getElementById("driveSizeInput").value = "";
+}
+
+function closeDriveModal() {
+  document.getElementById("driveModal").classList.add("hidden");
+}
+
+function confirmDriveModal() {
+  const username = document.getElementById("username").value.trim();
+  const sizeText = document.getElementById("driveSizeInput").value.trim();
+
+  if (!username) {
+    alert("Ingrese un nombre de usuario antes de crear el drive.");
+    return;
+  }
+
+  const size = parseInt(sizeText);
+  if (isNaN(size) || size <= 0) {
+    alert("Ingrese un tamaño válido (número mayor a 0).");
+    return;
+  }
+
+  sendCommand("CREATE_DRIVE", [username, size])
+    .then(response => {
+      alert(response.message);
+      closeDriveModal();
+    });
+}
+
 
 // ----------------------
 // Copiar y Mover
