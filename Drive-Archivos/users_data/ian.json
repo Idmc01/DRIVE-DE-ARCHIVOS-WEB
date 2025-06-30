@@ -1,8 +1,8 @@
 {
   "usuario": "ian",
   "espacio_total": 5000,
-  "espacio_usado": 55,
-  "ruta_actual": "/",
+  "espacio_usado": 76,
+  "ruta_actual": "/docs",
   "drive": {
     "nombre": "root",
     "tipo": "directorio",
@@ -36,6 +36,14 @@
             "fecha_creacion": "2025-06-27T19:55:09.965602100",
             "fecha_modificacion": "2025-06-27T19:55:09.965602100",
             "contenidoLista": []
+          },
+          {
+            "nombre": "Prueba",
+            "tipo": "directorio",
+            "tamano": 0,
+            "fecha_creacion": "2025-06-30T01:13:37.803727300",
+            "fecha_modificacion": "2025-06-30T01:13:37.803727300",
+            "contenidoLista": []
           }
         ]
       },
@@ -54,6 +62,25 @@
             "tamano": 4,
             "fecha_creacion": "2025-06-27T19:25:25.166063300",
             "fecha_modificacion": "2025-06-27T19:25:25.166063300",
+            "contenidoLista": []
+          },
+          {
+            "nombre": "1234.txt",
+            "tipo": "archivo",
+            "contenido": "hola mundo",
+            "tamano": 0,
+            "fecha_creacion": "2025-06-30T02:19:22.894932500",
+            "fecha_modificacion": "2025-06-30T02:19:22.894932500",
+            "contenidoLista": []
+          },
+          {
+            "nombre": "pruebaWeb.txt",
+            "tipo": "archivo",
+            "extension": ".txt",
+            "contenido": "archivo creado en web",
+            "tamano": 21,
+            "fecha_creacion": "2025-06-30T02:19:58.220615",
+            "fecha_modificacion": "2025-06-30T02:19:58.220615",
             "contenidoLista": []
           }
         ]

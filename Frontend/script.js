@@ -1,27 +1,41 @@
 let currentUser = null;
 let currentPath = "/";
 
-// Entrar al Drive (login)
+// ----------------------
+// Función para limpiar rutas
+// ----------------------
+function sanitizePath(inputPath) {
+  if (!inputPath) return "/";
+  let path = inputPath.trim();
+  if (!path.startsWith("/")) path = "/" + path;
+  path = path.replace(/\s+/g, "");
+  path = path.replace(/\/{2,}/g, "/");
+  return path;
+}
+
+// ----------------------
+// LOGIN
+// ----------------------
 function enterDrive() {
   const username = document.getElementById("username").value.trim();
   if (!username) return alert("Ingrese un nombre de usuario");
 
   sendCommand("LOGIN", [username])
     .then(response => {
-      console.log("Respuesta del backend:", response);
       if (response.success) {
-  currentUser = username; // <-- ASIGNAR USUARIO
-  document.getElementById("driveUI").style.display = "block";
-  document.getElementById("userInput").style.display = "none";
-  loadDirectory();
-}
- else {
+        currentUser = username;
+        document.getElementById("driveUI").style.display = "block";
+        document.getElementById("userInput").style.display = "none";
+        loadDirectory();
+      } else {
         alert(response.message);
       }
     });
 }
 
-// Listar contenido del directorio actual
+// ----------------------
+// Listar archivos y carpetas
+// ----------------------
 function loadDirectory() {
   document.getElementById("currentPath").innerText = currentPath;
   const fileView = document.getElementById("fileView");
@@ -33,57 +47,100 @@ function loadDirectory() {
         const lines = response.data.split("\n");
         lines.forEach(line => {
           if (line.trim() === "") return;
-
           const div = document.createElement("div");
+
           if (line.startsWith("[DIR]")) {
             const folderName = line.replace("[DIR]", "").trim();
             div.className = "folder";
             div.innerText = folderName;
-            div.onclick = () => {
-              currentPath += folderName + "/";
-              sendCommand("CHANGE_DIR", [folderName])
-                .then(resp => {
-                  if (resp.success) loadDirectory();
-                  else alert(resp.message);
-                });
-            };
+            div.onclick = () => changeDir(folderName);
           } else if (line.startsWith("[FILE]")) {
             const fileName = line.replace("[FILE]", "").split("(")[0].trim();
             div.className = "file";
             div.innerText = fileName;
             div.onclick = () => {
-              sendCommand("VIEW_FILE", [fileName])
-                .then(resp => {
-                  if (resp.success) {
-                    alert("Contenido de " + fileName + ":\n\n" + resp.data);
-                  } else {
-                    alert(resp.message);
-                  }
-                });
+              if (confirm(`¿Ver contenido o descargar "${fileName}"?\nAceptar: Ver\nCancelar: Descargar`)) {
+                viewFile(fileName);
+              } else {
+                downloadFile(fileName);
+              }
             };
           }
           fileView.appendChild(div);
         });
       } else {
-        if (response.success) {
-          fileView.innerText = "(Directorio vacío)";
-        } else {
-          fileView.innerText = response.message || "Error al listar contenido.";
-        }
-
+        fileView.innerText = response.message || "(Vacío)";
       }
     });
 }
 
-// Modal
-let modalAction = "";
-function createFolder() {
-  modalAction = "folder";
-  openModal("Crear Directorio");
+// ----------------------
+// Cambiar de directorio
+// ----------------------
+function changeDir(folderName) {
+  currentPath += folderName + "/";
+  sendCommand("CHANGE_DIR", [folderName])
+    .then(response => {
+      if (response.success) loadDirectory();
+      else alert(response.message);
+    });
 }
+
+function goBack() {
+  sendCommand("CHANGE_DIR", [".."])
+    .then(response => {
+      if (response.success) {
+        const parts = currentPath.split("/");
+        parts.pop(); parts.pop();
+        currentPath = parts.join("/") + "/";
+        if (currentPath === "//") currentPath = "/";
+        loadDirectory();
+      } else {
+        alert(response.message);
+      }
+    });
+}
+
+// ----------------------
+// Archivos
+// ----------------------
+function viewFile(filename) {
+  sendCommand("VIEW_FILE", [filename])
+    .then(response => {
+      if (response.success) {
+        alert("Contenido de " + filename + ":\n\n" + response.data);
+      } else {
+        alert(response.message);
+      }
+    });
+}
+
+function downloadFile(filename) {
+  sendCommand("DOWNLOAD", [filename, currentPath])
+    .then(response => {
+      if (response.success) {
+        const blob = new Blob([response.data], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+      } else {
+        alert(response.message);
+      }
+    });
+}
+
+// ----------------------
+// Crear archivo o carpeta
+// ----------------------
+let modalAction = "";
 function createFile() {
   modalAction = "file";
   openModal("Crear Archivo");
+}
+function createFolder() {
+  modalAction = "folder";
+  openModal("Crear Directorio");
 }
 function openModal(title) {
   document.getElementById("modalTitle").innerText = title;
@@ -114,9 +171,87 @@ function confirmModal() {
   }
 }
 
-// Función genérica para enviar comandos al backend
+// ----------------------
+// Copiar y Mover
+// ----------------------
+function prepareCopy() {
+  const item = prompt("Elemento a copiar:");
+  const dest = prompt("Ruta destino (ej: /docs/):");
+  if (item && dest) {
+    const cleanDest = sanitizePath(dest);
+    sendCommand("COPY", [item, currentPath, cleanDest])
+      .then(response => {
+        alert(response.message);
+        loadDirectory();
+      });
+  }
+}
+
+function prepareMove() {
+  const item = prompt("Elemento a mover:");
+  const dest = prompt("Ruta destino (ej: /docs/):");
+  if (item && dest) {
+    const cleanDest = sanitizePath(dest);
+    sendCommand("MOVE", [item, currentPath, cleanDest])
+      .then(response => {
+        alert(response.message);
+        loadDirectory();
+      });
+  }
+}
+
+// ----------------------
+// Eliminar
+// ----------------------
+function deleteItem() {
+  const item = prompt("Elemento a eliminar:");
+  if (item) {
+    sendCommand("DELETE", [item])
+      .then(response => {
+        alert(response.message);
+        loadDirectory();
+      });
+  }
+}
+
+// ----------------------
+// Compartir
+// ----------------------
+function shareItem() {
+  const item = prompt("Elemento a compartir:");
+  const destUser = prompt("Usuario destino:");
+  if (item && destUser) {
+    sendCommand("SHARE", [item, currentPath, destUser])
+      .then(response => alert(response.message));
+  }
+}
+
+// ----------------------
+// Upload (LOAD)
+// ----------------------
+function uploadFile() {
+  const fileInput = document.getElementById("fileInput");
+  fileInput.onchange = () => {
+    const file = fileInput.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        sendCommand("LOAD", [file.name, currentPath, reader.result])
+          .then(response => {
+            alert(response.message);
+            loadDirectory();
+          });
+      };
+      reader.readAsText(file);
+    }
+  };
+  fileInput.click();
+}
+
+// ----------------------
+// Envío de comando general
+// ----------------------
 function sendCommand(type, parameters) {
-  // Agregar el usuario actual al inicio de los parámetros, excepto en el login
   const effectiveParams = (type === "LOGIN" || type === "CREATE_DRIVE")
     ? parameters
     : [currentUser, ...parameters];
@@ -128,16 +263,12 @@ function sendCommand(type, parameters) {
 
   return fetch('http://127.0.0.1:3000/sendCommand', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(command)
   })
     .then(response => response.json())
     .catch(err => {
-      console.error("Error de red o de Node.js:", err);
+      console.error("Error de red:", err);
       return { success: false, message: "Error de conexión al backend" };
     });
 }
-
-

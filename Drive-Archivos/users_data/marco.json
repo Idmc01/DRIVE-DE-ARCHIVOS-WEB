@@ -2,7 +2,7 @@
   "usuario": "marco",
   "espacio_total": 10000,
   "espacio_usado": 10,
-  "ruta_actual": "/",
+  "ruta_actual": "/compartidos/ian",
   "drive": {
     "nombre": "root",
     "tipo": "directorio",
@@ -58,6 +58,15 @@
                     "contenidoLista": []
                   }
                 ]
+              },
+              {
+                "nombre": "ejemplo.txt",
+                "tipo": "archivo",
+                "contenido": "prueba upload",
+                "tamano": 0,
+                "fecha_creacion": "2025-06-30T01:54:53.684846800",
+                "fecha_modificacion": "2025-06-30T01:54:53.684846800",
+                "contenidoLista": []
               }
             ]
           }

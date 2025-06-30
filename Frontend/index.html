@@ -20,6 +20,11 @@
       <span id="currentPath">/</span>
       <button onclick="createFolder()">📁 Nuevo Directorio</button>
       <button onclick="createFile()">📄 Nuevo Archivo</button>
+      <button onclick="goBack()">⬅ Anterior</button>
+      <button onclick="prepareCopy()">Copiar</button>
+      <button onclick="prepareMove()">Mover</button>
+      <button onclick="shareItem()">Compartir</button>
+      <button onclick="uploadFile()">📤 Subir Archivo</button>
     </nav>
 
     <section id="fileView">
@@ -37,6 +42,9 @@
       <button onclick="closeModal()">Cancelar</button>
     </div>
   </div>
+
+  <!-- Input oculto para subir archivos locales -->
+  <input type="file" id="fileInput" style="display:none;" />
 
   <script src="script.js"></script>
 </body>
