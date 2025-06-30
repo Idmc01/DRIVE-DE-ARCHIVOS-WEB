@@ -1,7 +1,7 @@
 {
   "usuario": "ian",
   "espacio_total": 5000,
-  "espacio_usado": 34,
+  "espacio_usado": 55,
   "ruta_actual": "/",
   "drive": {
     "nombre": "root",
@@ -85,6 +85,32 @@
         "tamano": 0,
         "contenidoLista": [],
         "fechaCreacion": "2025-06-27T21:59:33.365021600"
+      },
+      {
+        "nombre": "pruebaWeb.txt",
+        "tipo": "archivo",
+        "extension": ".txt",
+        "contenido": "archivo creado en web",
+        "tamano": 21,
+        "fecha_creacion": "2025-06-29T21:12:19.303253600",
+        "fecha_modificacion": "2025-06-29T21:12:19.303253600",
+        "contenidoLista": []
+      },
+      {
+        "nombre": "pruebaDirWeb",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-29T21:29:06.861394200",
+        "fecha_modificacion": "2025-06-29T21:29:06.861394200",
+        "contenidoLista": []
+      },
+      {
+        "nombre": "pruebaDir2",
+        "tipo": "directorio",
+        "tamano": 0,
+        "fecha_creacion": "2025-06-29T21:45:30.892163800",
+        "fecha_modificacion": "2025-06-29T21:45:30.892163800",
+        "contenidoLista": []
       }
     ]
   },

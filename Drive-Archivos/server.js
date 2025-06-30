@@ -19,9 +19,9 @@ app.use((req, res, next) => {
 
 app.post('/sendCommand', (req, res) => {
   const commandJson = JSON.stringify(req.body);
-
   const client = new net.Socket();
   let responseBuffer = '';
+  let resSent = false;
 
   client.connect(JAVA_SERVER_PORT, JAVA_SERVER_HOST, () => {
     console.log('✅ Conectado al servidor Java');
@@ -29,25 +29,34 @@ app.post('/sendCommand', (req, res) => {
   });
 
   client.on('data', (data) => {
-  const respuesta = data.toString();
-  console.log('📥 Respuesta cruda recibida desde Java:', respuesta);
-  try {
-    const parsed = JSON.parse(respuesta);
-    console.log('✅ Respuesta parseada:', parsed);
-    res.json(parsed);
-  } catch (error) {
-    console.error('❌ Error al parsear JSON:', error);
-    res.status(500).send('Error en formato de respuesta del servidor Java');
-  }
-  client.write(commandJson + '\n');
-  client.end(); // Cerrar la conexión después de responder
-});
+    console.log('📥 Respuesta cruda recibida desde Java:', data.toString());
+    responseBuffer += data.toString();
+  });
+
+  client.on('end', () => {
+    console.log('Socket cerrado. Respuesta completa:', responseBuffer);
+    if (!resSent) {
+      try {
+        const parsedResponse = JSON.parse(responseBuffer);
+        console.log('✅ Respuesta parseada:', parsedResponse);
+        res.json(parsedResponse);
+      } catch (error) {
+        console.error('❌ Error al parsear JSON:', error);
+        res.status(500).send('Error al parsear respuesta del servidor Java');
+      }
+      resSent = true;
+    }
+  });
 
   client.on('error', (err) => {
     console.error('❌ Error al conectar al servidor Java:', err.message);
-    res.status(500).send('No se pudo conectar al servidor Java');
+    if (!resSent) {
+      res.status(500).send('No se pudo conectar al servidor Java');
+      resSent = true;
+    }
   });
 });
+
 
 app.listen(PORT, () => {
   console.log(`🌐 Node Proxy escuchando en http://localhost:${PORT}`);

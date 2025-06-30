@@ -1,4 +1,4 @@
-let currentUser = "";
+let currentUser = null;
 let currentPath = "/";
 
 // Entrar al Drive (login)
@@ -8,12 +8,14 @@ function enterDrive() {
 
   sendCommand("LOGIN", [username])
     .then(response => {
-      console.log(" Respuesta del backend:", response);
+      console.log("Respuesta del backend:", response);
       if (response.success) {
-        document.getElementById("driveUI").style.display = "block";
-        document.getElementById("userInput").style.display = "none";
-        loadDirectory();
-      } else {
+  currentUser = username; // <-- ASIGNAR USUARIO
+  document.getElementById("driveUI").style.display = "block";
+  document.getElementById("userInput").style.display = "none";
+  loadDirectory();
+}
+ else {
         alert(response.message);
       }
     });
@@ -114,9 +116,14 @@ function confirmModal() {
 
 // Función genérica para enviar comandos al backend
 function sendCommand(type, parameters) {
+  // Agregar el usuario actual al inicio de los parámetros, excepto en el login
+  const effectiveParams = (type === "LOGIN" || type === "CREATE_DRIVE")
+    ? parameters
+    : [currentUser, ...parameters];
+
   const command = {
     type: type,
-    parameters: parameters
+    parameters: effectiveParams
   };
 
   return fetch('http://127.0.0.1:3000/sendCommand', {
@@ -132,3 +139,5 @@ function sendCommand(type, parameters) {
       return { success: false, message: "Error de conexión al backend" };
     });
 }
+
+
